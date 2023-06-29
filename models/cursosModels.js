@@ -1,5 +1,6 @@
 const db = require('./../config/db');
-
+const{ Router} = require("express");
+// tiene que ser asincronica porque todo se ejecuta al mismo tiempo y de esa manera anda
 //vincula el programa con la base de datos y hace las peticiones
 
 
@@ -30,3 +31,8 @@ exports.deleteCursoById = async (id) =>{
     const [rows, fields] = await db.execute('DELETE FROM cursos WHERE id = ?', [id]);
     return rows
 } 
+
+exports.addEstudianteAUnCurso = async (estudiante) => {
+    const [rows, fields] = await db.execute('INSERT INTO `estudiantes_cursos` VALUE ( ?, ? )', [estudiante.estudiante_id, estudiante.id]);
+    return rows;
+}

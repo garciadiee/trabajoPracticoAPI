@@ -9,6 +9,7 @@ class Server {
         this.app = express();
         this.middlewares();
         this.routes();
+        this.app.use(express.json());
     }
 
     routes(){

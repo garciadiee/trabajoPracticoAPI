@@ -38,7 +38,7 @@ exports.getEstudiantesById = async (req, res) => {
         if (estudiante.length < 1) {
             res.status(404).json({
                 success: false,
-                msg: `nO EXISTE: ${idEstudiante}`
+                msg: `NO EXISTE: ${idEstudiante}`
             })
 
         }
