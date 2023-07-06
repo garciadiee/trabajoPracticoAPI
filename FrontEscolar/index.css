@@ -10,7 +10,7 @@ tbody{
   text-align: center;
 }
 body{
-    background-color: black;
+    background-color: rgb(28, 46, 21);
 }
 img{
     width:620px;
@@ -29,6 +29,12 @@ form{
   margin-bottom: 100px !important;
 }
 button{
-  background-color: rgb(245, 120, 120) !important;
+  background-color: rgb(151, 14, 14) !important;
   width: 100%;
+}
+
+.formularios{
+  display: flex;
+  
+
 }
