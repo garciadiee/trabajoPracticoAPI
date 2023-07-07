@@ -5,11 +5,14 @@ const { check } = require("express-validator");
 const { validarCampos } = require("./../Middlewares/validarCampos");
 // Definimos las rutas para derivar al controlador correspondiente
 
+// Indicamos cual se encarga de resolver el GET
+
 router.get("/", estudiantesController.getEstudiantes);
 router.get("/:id", estudiantesController.getEstudiantesById);
 router.get("/:id/cursos", estudiantesController.getCursosDelEstudiante);
+router.delete("/:id", estudiantesController.deleteEstudianteById);
 router.post(
-  "/",
+  "/", //damos validacion a los campos solicitados
   [
     check("nombre", "El nombre es obligatorio").not().isEmpty(),
     check("edad", "La edad es obligatoria").not().isEmpty(),
@@ -28,6 +31,5 @@ router.put(
   ],
   estudiantesController.updateEstudiante
 );
-router.delete("/:id", estudiantesController.deleteEstudianteById);
 
 module.exports = router;

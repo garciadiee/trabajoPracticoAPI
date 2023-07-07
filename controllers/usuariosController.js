@@ -1,18 +1,18 @@
-const cursosModels = require("./../models/cursosModels");
-// los controladores se encargan de la parte logica
+const usuariosModels = require("./../models/usuariosModels");
+// traemos todo lo que tiene dentro
 
-exports.getCursos = async (req, res) => {
+exports.getUsuarios = async (req, res) => {
   //evaluamos el bloque dentro del try
   try {
     //obtenemos los datos desde el modelo
-    const cursos = await cursosModels.obtenerCursos();
+    const usuarios = await usuariosModels.obtenerUsuarios();
 
     //si todo va bien respondemos con los usuarios, del lado del cliente
     //lo obtenemos con json
     //status 200 que todo fue ok
     res.status(200).json({
       success: true,
-      data: cursos,
+      data: usuarios,
     });
   } catch (error) {
     //si las instrucciones dentro del bloque try fallan,
@@ -26,20 +26,20 @@ exports.getCursos = async (req, res) => {
   }
 };
 
-exports.getCursoById = async (req, res) => {
-  const idCurso = req.params.id;
+exports.getUsuarioById = async (req, res) => {
+  const idUsuarios = req.params.id;
   try {
-    const curso = await cursosModels.getCursoById(idCurso);
+    const usuarios = await usuariosModels.getUsuarioById(idUsuarios);
 
-    if (curso.length < 1) {
+    if (usuarios.length < 1) {
       res.status(404).json({
         success: false,
-        msg: `No existe: ${idCurso}`,
+        msg: `No existe: ${idUsuarios}`,
       });
     }
     res.status(200).json({
       success: true,
-      curso,
+      usuarios,
     });
   } catch (error) {
     console.error(error);
@@ -50,14 +50,14 @@ exports.getCursoById = async (req, res) => {
   }
 };
 
-exports.addCurso = async (req, res) => {
-  const nuevoCurso = req.body;
+exports.addUsuario = async (req, res) => {
+  const nuevoUsuario = req.body;
   try {
-    const id = await cursosModels.addCurso(nuevoCurso);
+    const id = await usuariosModels.addUsuario(nuevoUsuario);
     res.status(201).json({
       success: true,
       message: "Funcionando",
-      nuevoCurso,
+      nuevoUsuario,
     });
   } catch (error) {
     console.error(error);
@@ -68,17 +68,17 @@ exports.addCurso = async (req, res) => {
   }
 };
 
-exports.updateCurso = async (req, res) => {
+exports.updateUsuario = async (req, res) => {
   const id = req.params.id;
-  const cursoActualizado = req.body;
+  const usuariosActualizado = req.body;
 
-  const curso = {
+  const usuarios = {
     id,
-    ...cursoActualizado, //muestra todo lo que necesitamos de forma mas breve
+    ...usuariosActualizado, //muestra todo lo que necesitamos de forma breve
   };
-  console.log(curso);
+  console.log(usuarios);
   try {
-    const listaActualizada = await cursosModels.updateCurso(curso);
+    const listaActualizada = await usuariosModels.updateUsuario(usuarios);
     if (listaActualizada < 1) {
       res.status(404).json({
         success: false,
@@ -88,7 +88,7 @@ exports.updateCurso = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Lista actualizada",
-      curso,
+      usuarios,
     });
   } catch (error) {
     res.status(500).json({
@@ -97,20 +97,19 @@ exports.updateCurso = async (req, res) => {
     });
   }
 };
-
-exports.deleteCursoById = async (req, res) => {
-  const idCurso = req.params.id;
+exports.deleteUsuarioById = async (req, res) => {
+  const idUsuario = req.params.id;
   try {
-    const curso = await cursosModels.deleteCursoById(idCurso);
+    const usuarios = await usuariosModels.deleteUsuarioById(idUsuario);
 
-    if (curso.length < 1) {
+    if (usuarios.length < 1) {
       //pregunto si existe el usuario
       res.status(404).json({
         success: false,
-        mgs: `No existe usuario con el id: ${idCurso}`,
+        mgs: `No existe usuario con el id: ${idUsuario}`,
       });
     }
-    //si todo va bien y existe el usuario =D
+    //si todo va bien y existe el usuario
     res.status(200).json({
       success: true,
       msg: "El usuario fue eliminado con exito",
@@ -124,32 +123,26 @@ exports.deleteCursoById = async (req, res) => {
   }
 };
 
-exports.addEstudianteAUnCurso = async (req, res) => {
-  const id = req.params.id;
-  const cursoActualizado = req.body;
-
-  const curso = {
-    id,
-    ...cursoActualizado, //muestra todo lo que necesitamos de forma mas breve
-  };
-  console.log(curso);
+exports.getCursosUsuarios = async (req, res) => {
+  const idUsuarios = req.params.id;
   try {
-    const listaActualizada = await cursosModel.addEstudianteAUnCurso(curso);
-    if (listaActualizada < 1) {
+    const usuarios = await usuariosModels.getCursosUsuarios(idUsuarios);
+
+    if (usuarios.length < 1) {
       res.status(404).json({
         success: false,
-        message: "Error agregando datos",
+        msg: `No existe: ${idUsuarios}`,
       });
     }
     res.status(200).json({
       success: true,
-      message: "Datos agregados correctamente",
-      curso,
+      usuarios,
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({
       success: false,
-      message: "No funciona",
+      message: "Hubo un error al obtener los datos",
     });
   }
 };
